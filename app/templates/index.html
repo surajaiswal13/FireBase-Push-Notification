@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-messaging.js"></script>
+
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyAeqvgSTqIrhKneOHWAX-kZPsClyhO5pMw",
+            authDomain: "test-push-notification-65372.firebaseapp.com",
+            projectId: "test-push-notification-65372",
+            storageBucket: "test-push-notification-65372.appspot.com",
+            messagingSenderId: "907521219934",
+            appId: "1:907521219934:web:b12bd9712e371f79c903cf"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    
+        const messaging = firebase.messaging();
+        console.log(messaging.getToken())
+        messaging.getToken({ vapidKey: 'BC9oc6VUdxZYylmBoRq5O7UkPND1F1uMlEDitl3vt_k0UN9t6DAGbDlZ3kwkpz99xa3YTS1xSFnLLybtF7stRSE' }).then((currentToken) => {
+        if (currentToken) {
+        
+        console.log(currentToken)
+        } else {
+        console.log('No registration token available. Request permission to generate one.');
+    
+        }
+    }).catch((err) => {
+        console.log('An error occurred while retrieving token. ', err);
+    });
+    
+    
+        messaging
+        .requestPermission()
+        .then(function () {
+        console.log("Notification permission granted.");
+        return messaging.getToken()
+        })
+        .catch(function (err) {
+        console.log("Unable to get permission to notify.", err);
+    });
+    
+    
+        messaging.onMessage((payload) => {
+        console.log('Message received. ', payload);
+    
+    });
+    
+    
+    
+    </script>
+
+
+</head>
+<body>
+    
+</body>
+</html>
